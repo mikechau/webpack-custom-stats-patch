@@ -1,0 +1,35 @@
+{
+  "name": "custom-stats-webpack-patch",
+  "version": "0.0.1",
+  "description": "Patches webpack's stats to include custom attributes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape ./tests/index.js | ./node_modules/.bin/tf-spec",
+    "lint": "eslint ./tests ./lib",
+    "check": "npm run lint && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikechau/custom-stats-webpack-patch.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "Mike Chau (@mikechau)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikechau/custom-stats-webpack-patch/issues"
+  },
+  "homepage": "https://github.com/mikechau/custom-stats-webpack-patch#readme",
+  "devDependencies": {
+    "@tap-format/spec": "git+https://github.com/tap-format/spec.git",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "glob": "^6.0.1",
+    "tape": "^4.2.2",
+    "webpack": "^1.12.9"
+  },
+  "peerDependencies": {
+    "webpack": "~1.x"
+  }
+}
