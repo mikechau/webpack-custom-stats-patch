@@ -1,5 +1,7 @@
 # webpack-custom-stats-patch
 
+[![npm version](https://badge.fury.io/js/webpack-custom-stats-patch.svg)](https://badge.fury.io/js/webpack-custom-stats-patch)
+
 This module provides a patched copy of webpack's `Stats` prototype, it extends
 it to allow you to inject your own custom attributes.
 
