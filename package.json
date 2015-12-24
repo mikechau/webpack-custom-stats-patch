@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "description": "Patches webpack's stats to include custom attributes.",
   "main": "index.js",
+  "files": [
+    "lib",
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "tape ./tests/index.js | ./node_modules/.bin/tf-spec",
     "lint": "eslint ./tests ./lib",

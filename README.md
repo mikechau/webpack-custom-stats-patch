@@ -10,7 +10,7 @@ that could be generating things like asset manifests.
 For example, you may be writing a webpack plugin to generate subresource
 integrity hashes that get saved into some mapping into webpack's `compilation`,
 but your stats plugin has no way of retrieving the mapping because
-`stats.toJSON()` returns only a specific set of the `compilation` by default[1].
+`stats.toJSON()` returns only a specific set of the `compilation` by default [[1]].
 
 ## Install
 
@@ -20,8 +20,8 @@ npm install webpack-custom-stats-patch --save-dev
 
 ## Usage
 
-```
-var CustomStats = require('webpakc-custom-stats-patch');
+```js
+var CustomStats = require('webpack-custom-stats-patch');
 
 var customStats = new CustomStats(compiliation);
 
@@ -47,9 +47,10 @@ customStats.replaceCustomStats({
 
 ## Special Thanks
 
-[@IngwiePhoenix](https://github.com/IngwiePhoenix)
-[Webpack Gitter](https://gitter.im/webpack/webpack)
+- [@IngwiePhoenix](https://github.com/IngwiePhoenix)
+- [Webpack Gitter](https://gitter.im/webpack/webpack)
 
-## References
+## LICENSE
+MIT.
 
 [1]: https://github.com/webpack/docs/wiki/node.js-api#statstojsonoptions "webpack stats.toJson()"
