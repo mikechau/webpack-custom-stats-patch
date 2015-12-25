@@ -14,6 +14,8 @@ integrity hashes that get saved into some mapping into webpack's `compilation`,
 but your stats plugin has no way of retrieving the mapping because
 `stats.toJSON()` returns only a specific set of the `compilation` by default [[1]].
 
+This plugin patches `compiliation.getStats()` and `stats.toJson()`.
+
 ## Install
 
 ```
