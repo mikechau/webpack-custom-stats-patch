@@ -37,5 +37,8 @@
   },
   "peerDependencies": {
     "webpack": "~1.x"
+  },
+  "dependencies": {
+    "lodash.merge": "^3.3.2"
   }
 }

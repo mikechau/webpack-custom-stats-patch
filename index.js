@@ -2,10 +2,24 @@
 
 var Stats = require('webpack/lib/Stats');
 var isPlainObject = require('./lib/utils/isPlainObject');
+var _merge = require('lodash.merge');
 
 function CustomStats(compilation) {
+  var self = this;
+  var currentStats = compilation.getStats();
+  var statsClassName = currentStats.constructor.name;
+
   Stats.apply(this, arguments);
-  this._customStats = {};
+
+  if (statsClassName === 'CustomStats' && (typeof currentStats.getCustomStats === 'function')) {
+    this._customStats = _merge({}, currentStats.getCustomStats());
+  } else {
+    this._customStats = {};
+  }
+
+  compilation.getStats = function getStats() {
+    return self;
+  };
 };
 
 CustomStats.prototype = Object.create(Stats.prototype);
@@ -17,11 +31,12 @@ CustomStats.prototype.getCustomStats = function getCustomStats() {
 };
 
 CustomStats.prototype.addCustomStat = function addCustomStat(key, value) {
+  var currentStatValue = this._customStats[key];
   var stat = {};
 
-  stat[key] = value;
+  this._customStats[key] = _merge({}, currentStatValue, value);
 
-  this._customStats[key] = value;
+  stat[key] = this._customStats[key];
 
   return stat;
 };
