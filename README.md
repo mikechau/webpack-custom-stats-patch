@@ -14,7 +14,9 @@ integrity hashes that get saved into some mapping into webpack's `compilation`,
 but your stats plugin has no way of retrieving the mapping because
 `stats.toJSON()` returns only a specific set of the `compilation` by default [[1]].
 
-This plugin patches `compiliation.getStats()` and `stats.toJson()`.
+This plugin patches `compilation.getStats()` and `stats.toJson()`.
+
+You can also reference your custom stats via `compilation.__CUSTOM_STATS`.
 
 ## Install
 
@@ -27,14 +29,23 @@ npm install webpack-custom-stats-patch --save-dev
 ```js
 var CustomStats = require('webpack-custom-stats-patch');
 
-var customStats = new CustomStats(compiliation);
+var customStats = new CustomStats(compilation);
 
 // Add a custom stat
 customStats.addCustomStat('sris', { 'main-123456789.js': 'sha512-9000' });
 
 // Now when `stats.toJson()` is called in your stats plugins, the custom stat
-/ is available
-customStats.toJson().sris // => { 'main-123456789.js': 'sha512-9000' });
+// is available
+customStats.toJson().sris
+// # => { 'main-123456789.js': 'sha512-9000' });
+
+// You can also view the custom stats directly in compilation
+compilation.__CUSTOM_STATS
+// # => {
+//    sris: {
+//      'main-123456789': 'sha512-9000'
+//    }
+// };
 
 // Replace custom stats in its entirety
 // Pass in a plain object

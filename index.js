@@ -20,11 +20,17 @@ function CustomStats(compilation) {
   compilation.getStats = function getStats() {
     return self;
   };
+
+  compilation.__CUSTOM_STATS = this._customStats;
 };
 
 CustomStats.prototype = Object.create(Stats.prototype);
 
 CustomStats.prototype.constructor = CustomStats;
+
+CustomStats.prototype.getCustomStat = function getCustomStat(key) {
+  return this._customStats[key];
+};
 
 CustomStats.prototype.getCustomStats = function getCustomStats() {
   return this._customStats;
@@ -32,13 +38,10 @@ CustomStats.prototype.getCustomStats = function getCustomStats() {
 
 CustomStats.prototype.addCustomStat = function addCustomStat(key, value) {
   var currentStatValue = this._customStats[key];
-  var stat = {};
 
   this._customStats[key] = _merge({}, currentStatValue, value);
 
-  stat[key] = this._customStats[key];
-
-  return stat;
+  return this._customStats[key];
 };
 
 CustomStats.prototype.replaceCustomStats = function replaceCustomStats(obj) {
