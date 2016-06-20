@@ -98,13 +98,13 @@ test('#toJson()', function(t) {
 
     customStatKeys.forEach(function(key) {
       t.deepEqual(actual[key], expected[key],
-        'should include "' + key + '" in stats given ' + '(' + JSON.stringify(jsonParams) + ')'
+        'should include "' + key + '" in stats given (' + JSON.stringify(jsonParams) + ')'
       );
     });
 
     Object.keys(jsonParams).forEach(function(key) {
       t.deepEqual(actual[key], expected[key],
-        'should not include "' + key + '" in stats given ' + '(' + JSON.stringify(jsonParams) + ')'
+        'should not include "' + key + '" in stats given (' + JSON.stringify(jsonParams) + ')'
       );
     });
   });
