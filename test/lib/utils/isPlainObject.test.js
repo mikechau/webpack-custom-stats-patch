@@ -1,10 +1,10 @@
 'use strict';
 
-var test = require('tape');
+var test = require('ava');
 var isPlainObject = require('../../../lib/utils/isPlainObject');
 
-test('isPlainObject()', function(assert) {
-  assert.plan(8);
+test('isPlainObject()', function(t) {
+  t.plan(8);
 
   [
     { obj: false, expected: false },
@@ -20,10 +20,8 @@ test('isPlainObject()', function(assert) {
     var actual = isPlainObject(obj);
     var expected = scenario.expected;
 
-    assert.equal(actual, expected,
+    t.is(actual, expected,
       'should return (' + expected + ') for (' + JSON.stringify(obj) + ')'
     );
   });
-
-  assert.end();
 });

@@ -40,5 +40,13 @@
   },
   "dependencies": {
     "lodash.merge": "^3.3.2"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js",
+      "!test/mocks/**/*"
+    ],
+    "failFast": true,
+    "verbose": true
   }
 }

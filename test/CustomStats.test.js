@@ -1,11 +1,11 @@
 'use strict';
 
-var test = require('tape');
+var test = require('ava');
 var CustomStats = require('..');
 var baseCompilationOptions = require('./fixtures/compilationOptionsFixture').base;
 var CompilationMock = require('./mocks/CompilationMock');
 
-test('CustomStats#getCustomStat()', function(assert) {
+test('#getCustomStat()', function(t) {
   var compilation = new CompilationMock(baseCompilationOptions);
   var customStats = new CustomStats(compilation);
   var expected = { 'leet.js': '123456' };
@@ -15,54 +15,47 @@ test('CustomStats#getCustomStat()', function(assert) {
 
   actual = customStats.getCustomStat('key');
 
-  assert.deepEqual(actual, expected, 'should get a custom stat');
-  assert.end();
+  t.deepEqual(actual, expected, 'should get a custom stat');
 });
 
-test('CustomStats#getCustomStats()', function(assert) {
+test('#getCustomStats()', function(t) {
   var compilation = new CompilationMock(baseCompilationOptions);
   var customStats = new CustomStats(compilation);
   var actual = customStats.getCustomStats();
   var expected = {};
 
-  assert.deepEqual(actual, expected, 'should get empty custom stats');
-
-  assert.end();
+  t.deepEqual(actual, expected, 'should get empty custom stats');
 });
 
-test('CustomStats#addCustomStat()', function(assert) {
+test('#addCustomStat()', function(t) {
   var compilation = new CompilationMock(baseCompilationOptions);
   var customStats = new CustomStats(compilation);
   var actual = customStats.addCustomStat('key', { test: 'ok' });
   var expected = { test: 'ok' };
 
-  assert.deepEqual(actual, expected,
+  t.deepEqual(actual, expected,
     'should return a object, given (key, value)'
   );
 
-  assert.deepEqual(customStats.getCustomStats().key, expected,
+  t.deepEqual(customStats.getCustomStats().key, expected,
     'should save the new custom stat'
   );
-
-  assert.end();
 });
 
-test('CustomStats#replaceCustomStats()', function(assert) {
+test('#replaceCustomStats()', function(t) {
   var compilation = new CompilationMock(baseCompilationOptions);
   var customStats = new CustomStats(compilation);
   var expected = { test: 'ok' };
 
-  assert.deepEqual(customStats.getCustomStats(), {}, 'should have empty custom stats');
+  t.deepEqual(customStats.getCustomStats(), {}, 'should have empty custom stats');
 
   customStats.replaceCustomStats(expected);
 
-  assert.deepEqual(customStats.getCustomStats(), expected, 'should replace custom stats');
-
-  assert.end();
+  t.deepEqual(customStats.getCustomStats(), expected, 'should replace custom stats');
 });
 
-test('CustomStats#toJson()', function(assert) {
-  assert.plan(2);
+test('#toJson()', function(t) {
+  t.plan(2);
 
   [
     {
@@ -104,22 +97,20 @@ test('CustomStats#toJson()', function(assert) {
     actual = customStats.toJson(jsonParams);
 
     customStatKeys.forEach(function(key) {
-      assert.deepEqual(actual[key], expected[key],
+      t.deepEqual(actual[key], expected[key],
         'should include "' + key + '" in stats given ' + '(' + JSON.stringify(jsonParams) + ')'
       );
     });
 
     Object.keys(jsonParams).forEach(function(key) {
-      assert.deepEqual(actual[key], expected[key],
+      t.deepEqual(actual[key], expected[key],
         'should not include "' + key + '" in stats given ' + '(' + JSON.stringify(jsonParams) + ')'
       );
     });
   });
-
-  assert.end();
 });
 
-test('CustomStats#toJson() handles merging of existing CustomStats', function(assert) {
+test('#toJson() handles merging of existing CustomStats', function(t) {
   var compilation = new CompilationMock(baseCompilationOptions);
   var stats = new CustomStats(compilation);
   var expected = {
@@ -146,7 +137,5 @@ test('CustomStats#toJson() handles merging of existing CustomStats', function(as
 
   actual = compilation.getStats().toJson().rails;
 
-  assert.deepEqual(actual, expected);
-
-  assert.end();
+  t.deepEqual(actual, expected);
 });
