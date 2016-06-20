@@ -11,6 +11,8 @@ function CompilationMock(options, customStats) {
   this.chunks = options.chunks;
   this.modules = options.modules;
   this.children = options.modules;
+
+  // eslint-disable-next-line no-underscore-dangle
   this._customStats = customStats || {};
 }
 

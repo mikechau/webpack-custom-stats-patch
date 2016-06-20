@@ -1,6 +1,6 @@
 # webpack-custom-stats-patch
 
-[![npm version](https://badge.fury.io/js/webpack-custom-stats-patch.svg)](https://badge.fury.io/js/webpack-custom-stats-patch)
+[![npm version](https://badge.fury.io/js/webpack-custom-stats-patch.svg)](https://badge.fury.io/js/webpack-custom-stats-patch) [![Build Status](https://travis-ci.org/mikechau/webpack-custom-stats-patch.svg?branch=master)](https://travis-ci.org/mikechau/webpack-custom-stats-patch) [![Dependency Status](https://david-dm.org/mikechau/webpack-custom-stats-patch.svg)](https://david-dm.org/mikechau/webpack-custom-stats-patch) [![devDependency Status](https://david-dm.org/mikechau/webpack-custom-stats-patch/dev-status.svg)](https://david-dm.org/mikechau/webpack-custom-stats-patch#info=devDependencies)
 
 This module provides a patched copy of webpack's `Stats` prototype, it extends
 it to allow you to inject your own custom attributes.

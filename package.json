@@ -10,8 +10,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "tape ./tests/index.js | ./node_modules/.bin/tf-spec",
-    "lint": "eslint ./tests ./lib",
+    "test": "ava",
+    "lint": "eslint ./test ./lib",
     "check": "npm run lint && npm run test"
   },
   "repository": {
@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/mikechau/webpack-custom-stats-patch#readme",
   "devDependencies": {
-    "@tap-format/spec": "git+https://github.com/tap-format/spec.git",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.1.1",
-    "glob": "^6.0.1",
-    "tape": "^4.2.2",
+    "ava": "^0.15.2",
+    "eslint": "^2.13.1",
+    "eslint-config-mc": "^0.6.5",
+    "eslint-plugin-ava": "^2.5.0",
+    "eslint-plugin-import": "^1.8.1",
     "webpack": "^1.12.9"
   },
   "peerDependencies": {
@@ -40,5 +40,13 @@
   },
   "dependencies": {
     "lodash.merge": "^3.3.2"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js",
+      "!test/mocks/**/*"
+    ],
+    "failFast": true,
+    "verbose": true
   }
 }
