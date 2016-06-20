@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 'use strict';
 
 var Stats = require('webpack/lib/Stats');
@@ -17,12 +19,14 @@ function CustomStats(compilation) {
     this._customStats = {};
   }
 
+  /* eslint-disable no-param-reassign */
   compilation.getStats = function getStats() {
     return self;
   };
 
   compilation.__CUSTOM_STATS = this._customStats;
-};
+  /* eslint-enable no-param-reassign */
+}
 
 CustomStats.prototype = Object.create(Stats.prototype);
 
@@ -56,7 +60,7 @@ CustomStats.prototype.toJson = function toJson(options, forToString) {
   var self = this;
   var params = options || {};
   var stats = Stats.prototype.toJson.apply(self, arguments);
-  var customStats;
+  var customStats = self._customStats;
 
   if (forToString) {
     return stats;
@@ -66,9 +70,7 @@ CustomStats.prototype.toJson = function toJson(options, forToString) {
     return params[key] === undefined ? true : params[key];
   }
 
-  customStats = self._customStats;
-
-  Object.keys(customStats).forEach(function(customStatKey) {
+  Object.keys(customStats).forEach(function addStats(customStatKey) {
     if (allowCustomStat(customStatKey)) {
       stats[customStatKey] = customStats[customStatKey];
     }
