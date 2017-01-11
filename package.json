@@ -1,6 +1,6 @@
 {
   "name": "webpack-custom-stats-patch",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Patches webpack's stats to include custom attributes.",
   "main": "index.js",
   "files": [
