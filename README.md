@@ -18,9 +18,19 @@ This plugin patches `compilation.getStats()` and `stats.toJson()`.
 
 You can also reference your custom stats via `compilation.__CUSTOM_STATS`.
 
+## Versioning
+
+If you are using Webpack v1, you should use version `1.x` of this package.
+
+If you are using Webpack v2.2.0-rc4 or higher, you should use version `2.x` of this package.
+
 ## Install
 
-```
+```shell
+# webpack v1.13
+npm install webpack-custom-stats-patch@1.x --save-dev
+
+# webpack v2.2.0-rc.4
 npm install webpack-custom-stats-patch --save-dev
 ```
 
