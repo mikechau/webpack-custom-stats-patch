@@ -6,77 +6,72 @@ var Stats = require('webpack/lib/Stats');
 var isPlainObject = require('./lib/utils/isPlainObject');
 var _merge = require('lodash.merge');
 
-function CustomStats(compilation) {
-  var self = this;
-  var currentStats = compilation.getStats();
-  var statsClassName = currentStats.constructor.name;
+class CustomStats extends Stats {
+  constructor(compilation) {
+    var currentStats = compilation.getStats();
+    var statsClassName = currentStats.constructor.name;
 
-  Stats.apply(this, arguments);
+    super(compilation);
 
-  if (statsClassName === 'CustomStats' && (typeof currentStats.getCustomStats === 'function')) {
-    this._customStats = _merge({}, currentStats.getCustomStats());
-  } else {
-    this._customStats = {};
+    if (statsClassName === 'CustomStats' && (typeof currentStats.getCustomStats === 'function')) {
+      this._customStats = _merge({}, currentStats.getCustomStats());
+    } else {
+      this._customStats = {};
+    }
+
+    /* eslint-disable no-param-reassign */
+    compilation.getStats = () => this;
+
+    compilation.__CUSTOM_STATS = this._customStats;
+    /* eslint-enable no-param-reassign */
   }
 
-  /* eslint-disable no-param-reassign */
-  compilation.getStats = function getStats() {
-    return self;
-  };
-
-  compilation.__CUSTOM_STATS = this._customStats;
-  /* eslint-enable no-param-reassign */
-}
-
-CustomStats.prototype = Object.create(Stats.prototype);
-
-CustomStats.prototype.constructor = CustomStats;
-
-CustomStats.prototype.getCustomStat = function getCustomStat(key) {
-  return this._customStats[key];
-};
-
-CustomStats.prototype.getCustomStats = function getCustomStats() {
-  return this._customStats;
-};
-
-CustomStats.prototype.addCustomStat = function addCustomStat(key, value) {
-  var currentStatValue = this._customStats[key];
-
-  this._customStats[key] = _merge({}, currentStatValue, value);
-
-  return this._customStats[key];
-};
-
-CustomStats.prototype.replaceCustomStats = function replaceCustomStats(obj) {
-  if (obj && isPlainObject(obj)) {
-    this._customStats = obj;
+  getCustomStat(key) {
+    return this._customStats[key];
   }
 
-  return this._customStats;
-};
+  getCustomStats() {
+    return this._customStats;
+  }
 
-CustomStats.prototype.toJson = function toJson(options, forToString) {
-  var self = this;
-  var params = options || {};
-  var stats = Stats.prototype.toJson.apply(self, arguments);
-  var customStats = self._customStats;
+  addCustomStat(key, value) {
+    var currentStatValue = this._customStats[key];
 
-  if (forToString) {
+    this._customStats[key] = _merge({}, currentStatValue, value);
+
+    return this._customStats[key];
+  }
+
+  replaceCustomStats(obj) {
+    if (obj && isPlainObject(obj)) {
+      this._customStats = obj;
+    }
+
+    return this._customStats;
+  }
+
+  toJson(options, forToString) {
+    var self = this;
+    var params = options || {};
+    var stats = Stats.prototype.toJson.apply(self, arguments);
+    var customStats = self._customStats;
+
+    if (forToString) {
+      return stats;
+    }
+
+    function allowCustomStat(key) {
+      return params[key] === undefined ? true : params[key];
+    }
+
+    Object.keys(customStats).forEach(function addStats(customStatKey) {
+      if (allowCustomStat(customStatKey)) {
+        stats[customStatKey] = customStats[customStatKey];
+      }
+    });
+
     return stats;
   }
-
-  function allowCustomStat(key) {
-    return params[key] === undefined ? true : params[key];
-  }
-
-  Object.keys(customStats).forEach(function addStats(customStatKey) {
-    if (allowCustomStat(customStatKey)) {
-      stats[customStatKey] = customStats[customStatKey];
-    }
-  });
-
-  return stats;
-};
+}
 
 module.exports = CustomStats;
