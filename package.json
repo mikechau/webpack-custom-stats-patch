@@ -33,7 +33,7 @@
     "eslint-config-mc": "^0.6.5",
     "eslint-plugin-ava": "^2.5.0",
     "eslint-plugin-import": "^1.8.1",
-    "webpack": "^2.2.0-rc.4"
+    "webpack": "^2.6.1"
   },
   "peerDependencies": {
     "webpack": ">=2.2.0-rc.4"
